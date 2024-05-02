@@ -31,6 +31,15 @@ def list_all_events():
     all_events = event_repo.get_all_events_for_table()
     return render_template('list_all_events.html', events=all_events )
 
+@app.post('/events')
+def create_bookmark():
+    # TODO: Feature 1
+    user_bookmark = request.form['user_bookmark']
+    user_repository.create_bookmark(user_bookmark)
+    return render_template('list_all_events.html')
+
+
+
 @app.get('/events/<int:event_id>')
 def get_event(event_id):
     event = event_repo.get_event_by_id(event_id)
@@ -174,5 +183,13 @@ def list_all_user_events():
     if 'user_id' in session:
         all_events = event_repo.get_all_events_by_user_id(session['user_id'])
         return render_template('list_all_user_events.html', events=all_events)
+    else:
+        return render_template('index.html')
+    
+@app.get('/profile/bookmarks')
+def list_all_bookmarks():
+    if 'user_id' in session:
+        all_events = event_repo.get_user_by_id(session['user_id'])
+        return render_template('list_bookmarks.html', events=all_events)
     else:
         return render_template('index.html')

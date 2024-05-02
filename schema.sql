@@ -4,8 +4,10 @@ CREATE TABLE IF NOT EXISTS users (
     user_lname          VARCHAR(255)    NOT NULL,
     user_email          VARCHAR(255)    UNIQUE NOT NULL,
     user_password       VARCHAR(255)    NOT NULL,
+    user_bookmark       SERIAL,
     user_since          TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (user_bookmark) REFERENCES users(user_id)
 );
 
 CREATE TABLE IF NOT EXISTS events (
@@ -19,6 +21,7 @@ CREATE TABLE IF NOT EXISTS events (
     PRIMARY KEY (event_id), 
     FOREIGN KEY (host_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 
 -- Run this only if you have the old tables
 alter table events rename  column title to event_name;

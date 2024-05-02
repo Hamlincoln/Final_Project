@@ -47,6 +47,7 @@ def get_user_by_id(user_id: int) -> dict[str, Any] | None:
                             user_fname,
                             user_lname,
                             user_email,
+                            user_bookmark,
                             user_since
                         FROM
                             users
